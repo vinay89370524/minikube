@@ -19,7 +19,7 @@ spec:
       - env:
         - name: MONGO_DB_CONNECTION_STRING
           value: mongodb://mongo:27017/sample
-        image: vinaykumar0524/persistence:1.0
+        image: vinaykumar0524/ps-sample:latest
         name: sample
         ports:
         - containerPort: 80
