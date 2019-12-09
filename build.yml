@@ -1,0 +1,29 @@
+---
+- hosts: minikube
+  become: yes
+  become_method: sudo
+  vars_files:
+    - variables.yml
+    - credentials.yml
+  tasks:
+
+    - name: cloning repo
+      git: repo={{ repo_name }} version={{ branch }} dest={{ path }} clone=yes update=yes force=yes
+
+    - name: Build docker image from Dockerfile
+      args:
+        chdir: /home/ansible/demo
+      shell: docker build -t {{ image_name }} .
+
+    - name: tag image
+      shell: docker tag {{ image_name }}:latest {{ username }}/{{ image_name }}:latest
+
+    - name: docker login for Authentication to DockerHub.
+      shell: docker login -u {{ username }} -p {{ password }}
+
+    - name: Push docker image to docker hub
+      shell: docker push {{ username }}/{{ image_name }}:latest
+      tags: "{{ image_name }}"
+
+    - name: pull the kubernetes files from Github
+      git: repo={{ kube_repo_name }} version={{ branch }} dest=/home/ansible/minikube/ clone=yes update=yes force=yes

@@ -1,0 +1,10 @@
+---
+
+#variables passing to playbook
+
+repo_name: https://github.com/mttwise/persistence-sample.git
+branch: master
+image_name: ps-sample
+path: /home/ansible/demo
+kube_repo_name: https://github.com/vinay89370524/minikube.git
+kube_repo_path: /home/ansible/minikube

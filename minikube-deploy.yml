@@ -1,0 +1,16 @@
+---
+- hosts: minikube
+  remote_user: ansible
+  vars_files:
+    - variables.yml
+  tasks:
+
+    - name: Deploy deployment and service files through kubernetes
+      args:
+        chdir: /home/ansible/minikube/
+      shell: kubectl apply -f deploy.yml
+
+    
+
+    
+
